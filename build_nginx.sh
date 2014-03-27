@@ -13,10 +13,10 @@ NGX_WORKER_PROC_GROUP=work
 MOD_SRC_PATH=$SRC_PATH/tmp/
 mkdir tmp
 cp $SRC_PATH/tools/*.tar.gz ./tmp/
+cp  -r $SRC_PATH/nginx/nginx-rtmp-module ./tmp/ 
 cd tmp
 tar -xvzf ./pcre-8.33.tar.gz 
 tar -xvzf ./openssl-1.0.1e.tar.gz
-cp nginx/nginx-rtmp-module tmp/ -r
 PCRE_SRC=$SRC_PATH/tmp/pcre-8.33/
 OPENSSL_SRC=$SRC_PATH/tmp/openssl-1.0.1e/ 
 OPTS_WITH="--with-ipv6 \
@@ -56,6 +56,6 @@ make
 #make install
 cd	$SRC_PATH
 mkdir -p ./output/nginx/bin ./output/nginx/conf ./output/nginx/lib ./output/nginx/logs
-cp tmp/nginx/nginx-1.4.2/objs/nginx output/nginx/bin/
+cp tmp/nginx-1.4.2/objs/nginx output/nginx/bin/
 cp nginx/conf/* ./output/nginx/conf/ 
 exit 0
