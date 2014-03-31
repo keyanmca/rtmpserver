@@ -25,7 +25,13 @@ ActionControllerConfig::$config = array(
 		null,
 		null 
 	),
-	
+	'/^\/rest\/2.0\/rtmp\/video\/play' => array (
+		'rtmpvideopublish',
+		UI_PATH . '/video/ActionVideoPlay.class.php',
+		null,
+		null 
+	),
+
 );
 
 

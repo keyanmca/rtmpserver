@@ -33,17 +33,9 @@ define('CACHE_PATH',         ROOT_PATH.'cache/');
 define('TEMPLATE_PATH',      ROOT_PATH.'template/');
 define('CONFIG_PATH',        ROOT_PATH.'config/');
 define('PHPLIB_PATH', ROOT_PATH.'../phplib/');
-require_once(PHPLIB_PATH.'framework/config/GlobalConfig.class.php'); 
 require_once(PHPLIB_PATH.'framework/common/env_init.php');
-if (true === GlobalConfig::$hookBeforeRequestProcessSwitch) {
-	$context->fireEvent(new Event(HOOK_BEFORE_REQUEST_PROCESS
- 		, 'index.php', null));
-}
+require_once(PHPLIB_PATH.'framework/config/GlobalConfig.class.php'); 
 $context->callAction($context->rootAction->actionID);
-if (true === GlobalConfig::$hookAfterRequestProcessSwitch) {
-	$context->fireEvent(new Event(HOOK_AFTER_REQUEST_PROCESS
- 		, 'index.php', null));
-}
 
 ?>
 
