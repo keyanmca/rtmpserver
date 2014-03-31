@@ -32,7 +32,14 @@ class ActionVideoPublish extends AbstractAction {
 	 */
 	public function execute($context, $actionParam = null) {
 		$this->serverInit ();
-		$this->serverQuit (self::ALLOW);
+		switch(intval($_REQUEST['access_token'])){
+			case 1:
+				$this->serverQuit (self::ALLOW);
+			case 2:
+				$this->serverQuit (self::REDIRECT, "rtmp://10.26.74.17:8081/live/test?access_token=1");
+			case 3:
+			$this->serverQuit (self::DENY);  
+		}
 	}
 	
 	
