@@ -19,13 +19,13 @@ class ActionControllerConfig {
 	public static $config;
 }
 ActionControllerConfig::$config = array(
-	'/^\/rest\/2.0\/rtmp\/video\/publish' => array (
+	'/^\/rest\/2.0\/rtmp\/video\/publish/' => array (
 		'rtmpvideopublish',
 		UI_PATH . '/video/ActionVideoPublish.class.php',
 		null,
 		null 
 	),
-	'/^\/rest\/2.0\/rtmp\/video\/play' => array (
+	'/^\/rest\/2.0\/rtmp\/video\/play/' => array (
 		'rtmpvideopublish',
 		UI_PATH . '/video/ActionVideoPlay.class.php',
 		null,

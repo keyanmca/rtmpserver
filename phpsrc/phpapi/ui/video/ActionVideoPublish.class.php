@@ -31,9 +31,8 @@ class ActionVideoPublish extends AbstractAction {
 	 * @param object $actionParam
 	 */
 	public function execute($context, $actionParam = null) {
-		$this->serverInit ( "ActionVideoPublish start");
-		//$this->attemptExit ( $res, 'ActionVideoPublish end' );
-		$this->serverQuit ( "ActionVideoPublisho end" );
+		$this->serverInit ();
+		$this->serverQuit (self::ALLOW);
 	}
 	
 	
