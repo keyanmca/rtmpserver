@@ -74,7 +74,7 @@ ngx_rtmp_protocol_message_handler(ngx_rtmp_session_t *s,
                  * && limit */
             }
             break;
-
+		
         default:
             return NGX_ERROR;
     }

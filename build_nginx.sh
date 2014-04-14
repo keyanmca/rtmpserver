@@ -11,6 +11,7 @@ NGX_PIDFILE_PATH="$NGX_HOME/run/nginx.pid"
 NGX_WORKER_PROC_USER=work  
 NGX_WORKER_PROC_GROUP=work    
 MOD_SRC_PATH=$SRC_PATH/tmp/
+rm -rf tmp
 mkdir tmp
 cp $SRC_PATH/tools/*.tar.gz ./tmp/
 cp  -r $SRC_PATH/nginx/nginx-rtmp-module ./tmp/ 
@@ -31,6 +32,7 @@ OPTS_WITH="--with-ipv6 \
 	--with-pcre-jit \
 	--with-openssl=$OPENSSL_SRC \
 	--with-cc-opt=-Wno-error \
+	--with-debug \
 	--with-ld-opt=-lstdc++"
 #for options of --without-* of configuration script
 OPTS_WITHOUT="--without-http_userid_module \
