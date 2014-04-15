@@ -1,0 +1,2 @@
+openssl-1.0.1e.tar.gz  实际上是编译好的
+nginx-1.4.2.tar.gz  修改了auto/lib/openssl/make, 不编译openssl
