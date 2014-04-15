@@ -106,6 +106,8 @@ static int HandleMetadata(RTMP *r, char *body, unsigned int len);
 static void HandleChangeChunkSize(RTMP *r, const RTMPPacket *packet);
 static void HandleAudio(RTMP *r, const RTMPPacket *packet);
 static void HandleVideo(RTMP *r, const RTMPPacket *packet);
+//add by gw
+static void HandleChat(RTMP *r, const RTMPPacket *packet);
 static void HandleCtrl(RTMP *r, const RTMPPacket *packet);
 static void HandleServerBW(RTMP *r, const RTMPPacket *packet);
 static void HandleClientBW(RTMP *r, const RTMPPacket *packet);
@@ -1139,6 +1141,11 @@ RTMP_ClientPacket(RTMP *r, RTMPPacket *packet)
 	r->m_mediaChannel = packet->m_nChannel;
       if (!r->m_pausing)
 	r->m_mediaStamp = packet->m_nTimeStamp;
+      break;
+	// add by gw
+	case 0x0A:
+      /* chat data */
+      HandleChat(r, packet);
       break;
 
     case 0x0F:			/* flex stream send */
@@ -2675,6 +2682,12 @@ static void
 HandleVideo(RTMP *r, const RTMPPacket *packet)
 {
 }
+//add by gw
+static void
+HandleChat(RTMP *r, const RTMPPacket *packet)
+{
+}
+
 
 static void
 HandleCtrl(RTMP *r, const RTMPPacket *packet)
@@ -3992,8 +4005,9 @@ Read_1_Packet(RTMP *r, char *buf, unsigned int buflen)
 	}
 
       /* calculate packet size and allocate slop buffer if necessary */
+	  // add by gw
       size = nPacketLen +
-	((packet.m_packetType == 0x08 || packet.m_packetType == 0x09
+	((packet.m_packetType == 0x08 || packet.m_packetType == 0x09 || packet.m_packetType == 0x0A
 	  || packet.m_packetType == 0x12) ? 11 : 0) +
 	(packet.m_packetType != 0x16 ? 4 : 0);
 
@@ -4021,7 +4035,7 @@ Read_1_Packet(RTMP *r, char *buf, unsigned int buflen)
 
       /* audio (0x08), video (0x09) or metadata (0x12) packets :
        * construct 11 byte header then add rtmp packet's data */
-      if (packet.m_packetType == 0x08 || packet.m_packetType == 0x09
+      if (packet.m_packetType == 0x08 || packet.m_packetType == 0x09 || packet.m_packetType == 0x0A
 	  || packet.m_packetType == 0x12)
 	{
 	  nTimeStamp = r->m_read.nResumeTS + packet.m_nTimeStamp;

@@ -19,7 +19,7 @@ DEF_=-DNO_CRYPTO
 CRYPTO_DEF=$(DEF_$(CRYPTO))
 
 DEF=-DRTMPDUMP_VERSION=\"$(VERSION)\" $(CRYPTO_DEF) $(XDEF)
-OPT=-O2
+OPT=-g
 CFLAGS=-Wall $(XCFLAGS) $(INC) $(DEF) $(OPT)
 LDFLAGS=-Wall $(XLDFLAGS)
 
@@ -49,15 +49,7 @@ EXT=$(EXT_$(SYS))
 
 all:	$(LIBRTMP) progs
 
-progs:	rtmpdump rtmpgw rtmpsrv rtmpsuck
-
-install:	progs
-	-mkdir -p $(BINDIR) $(SBINDIR) $(MANDIR)/man1 $(MANDIR)/man8
-	cp rtmpdump$(EXT) $(BINDIR)
-	cp rtmpgw$(EXT) rtmpsrv$(EXT) rtmpsuck$(EXT) $(SBINDIR)
-	cp rtmpdump.1 $(MANDIR)/man1
-	cp rtmpgw.8 $(MANDIR)/man8
-	@cd librtmp; $(MAKE) install
+progs:	rtmpmsg rtmpdump rtmpgw rtmpsrv rtmpsuck
 
 clean:
 	rm -f *.o rtmpdump$(EXT) rtmpgw$(EXT) rtmpsrv$(EXT) rtmpsuck$(EXT)
@@ -74,6 +66,10 @@ $(LIBRTMP): FORCE
 rtmpdump: rtmpdump.o $(LIBRTMP)
 	$(CC) $(LDFLAGS) $^ $> -o $@$(EXT) $(LIBS)
 
+rtmpmsg: rtmpmsg.o $(LIBRTMP)
+	$(CC) $(LDFLAGS) $^ $> -o $@$(EXT) $(LIBS)
+
+
 rtmpsrv: rtmpsrv.o thread.o $(LIBRTMP)
 	$(CC) $(LDFLAGS) $^ $> -o $@$(EXT) $(SLIBS)
 
@@ -83,6 +79,7 @@ rtmpsuck: rtmpsuck.o thread.o $(LIBRTMP)
 rtmpgw: rtmpgw.o thread.o $(LIBRTMP)
 	$(CC) $(LDFLAGS) $^ $> -o $@$(EXT) $(SLIBS)
 
+rtmpmsg.o: rtmpmsg.c $(INCRTMP) Makefile
 rtmpgw.o: rtmpgw.c $(INCRTMP) Makefile
 rtmpdump.o: rtmpdump.c $(INCRTMP) Makefile
 rtmpsrv.o: rtmpsrv.c $(INCRTMP) Makefile
