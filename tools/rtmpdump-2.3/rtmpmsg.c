@@ -44,8 +44,10 @@ int GetMsg()
 	RTMPPacket_Reset(packet);//重置packet状态
 	int32_t nRead;  	
   	nRead = RTMP_ReadPacket(rtmp, packet) ;
-  	RTMPPacket_Dump(packet);
-  	printf("i receive a msg : %s\n" ,packet->m_body);
+	RTMPPacket_Dump(packet);
+  	if(packet->m_packetType == 0x0A){
+  		printf("i receive a msg : %s\n" ,packet->m_body);
+	}	
   	return nRead;
 }
 
@@ -195,6 +197,7 @@ int main(int argc, char ** argv)
 			char tmp[100] = {0};
 			printf("waiting for your msg :\n");
 			scanf("%s",tmp);
+			printf("i get a msg: %s\n", tmp);
 			SendMsg(tmp, strlen(tmp));
 		}else{
 			GetMsg();	
